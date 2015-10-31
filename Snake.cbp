@@ -32,6 +32,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-static-libgcc" />
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
@@ -54,6 +55,7 @@
 		<Unit filename="include/Field.h" />
 		<Unit filename="include/GameActive.h" />
 		<Unit filename="include/GameMainMenu.h" />
+		<Unit filename="include/GameOver.h" />
 		<Unit filename="include/GameState.h" />
 		<Unit filename="include/Item.h" />
 		<Unit filename="include/Snake.h" />
@@ -61,6 +63,7 @@
 		<Unit filename="src/Field.cpp" />
 		<Unit filename="src/GameActive.cpp" />
 		<Unit filename="src/GameMainMenu.cpp" />
+		<Unit filename="src/GameOver.cpp" />
 		<Unit filename="src/GameState.cpp" />
 		<Unit filename="src/Item.cpp" />
 		<Unit filename="src/Snake.cpp" />
