@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include "GameState.h"
 #include "GameActive.h"
 
@@ -62,9 +63,8 @@ void GameMainMenu::render(sf::RenderWindow& window)
     window.clear(sf::Color(125,50,0, 255));
 
     sf::Text menuText;
-
     menuText.setFont(textFont);
-    menuText.setString("Exomo Snake\nDrücke <Enter> um zu starten\nDrücke <Esc> um zu beenden");
+    menuText.setString(L"Exomo Snake\nDrÃ¼cke <Enter> um zu starten\nDrÃ¼cke <Esc> um zu beenden");
     menuText.setCharacterSize(50);
     menuText.setColor(sf::Color::Blue);
     menuText.setPosition(50, 20);

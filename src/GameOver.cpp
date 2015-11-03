@@ -64,10 +64,10 @@ void GameOver::render(sf::RenderWindow& window)
 
     sf::Text menuText;
 
-    std::ostringstream gameOverText;
-    gameOverText << "Spiel vorbei\n"
-                 << "Deine Punktzahl: " << score << "\n\n"
-                 << "Drücke <Enter> um neu zu starten\nDrücke <Esc> um zum\nHauptmenü zurückzukehren";
+    std::wostringstream gameOverText;
+    gameOverText << L"Spiel vorbei\n"
+                 << L"Deine Punktzahl: " << score << "\n\n"
+                 << L"DrÃ¼cke <Enter> um neu zu starten\nDrÃ¼cke <Esc> um zum\nHauptmenÃ¼ zurÃ¼ckzukehren";
 
     menuText.setFont(textFont);
     menuText.setString(gameOverText.str());

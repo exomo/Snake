@@ -41,15 +41,15 @@ void GameActive::handleEvent(const sf::Event& event)
         if(event.key.code == sf::Keyboard::Escape)
         {
             /*
-             * Hier wird nur gespeichert dass die Escape Taste gedrückt wurde und in den Pausenbildschirm gewechselt werden soll.
-             * Der Zustandswechsel nach "Pause" wird erst im updateGame() Schritt durchgeführt.
+             * Hier wird nur gespeichert dass die Escape Taste gedrÃ¼ckt wurde und in den Pausenbildschirm gewechselt werden soll.
+             * Der Zustandswechsel nach "Pause" wird erst im updateGame() Schritt durchgefÃ¼hrt.
              */
             pauseRequested = true;
         }
         /*
-         * Richtungstasten ändern die Bewegungsrichtung der Schlange.
-         * Solange bis die Schlange sich tatsächlich bewegt hat kann die
-         * Bewegungsrichtung immer wieder überschrieben werden, um eventuelle
+         * Richtungstasten Ã¤ndern die Bewegungsrichtung der Schlange.
+         * Solange bis die Schlange sich tatsÃ¤chlich bewegt hat kann die
+         * Bewegungsrichtung immer wieder Ã¼berschrieben werden, um eventuelle
          * falsche Eingaben zu korrigieren.
          */
         if(event.key.code == sf::Keyboard::Left)
@@ -69,7 +69,7 @@ void GameActive::handleEvent(const sf::Event& event)
 
 GameStatePtr GameActive::updateGame(sf::Time elapsed)
 {
-    /* Wenn die Esc-Taste gedrückt wurde, wird sofort in den Startbildschirm gewechselt,
+    /* Wenn die Esc-Taste gedrÃ¼ckt wurde, wird sofort in den Startbildschirm gewechselt,
      * ohne die Schlange zu bewegen. */
     if(pauseRequested)
     {
@@ -83,7 +83,7 @@ GameStatePtr GameActive::updateGame(sf::Time elapsed)
         auto moveResult = snake.moveStep(field);
         if(moveResult == MoveResult::FoundFruit)
         {
-            /* Wenn die Schlange einen Apfel gefunden hat, wird die Punktzahl erhöht
+            /* Wenn die Schlange einen Apfel gefunden hat, wird die Punktzahl erhÃ¶ht
              * und ein neuer Apfel auf dem Spielfeld platziert. */
             ++score;
             field.addItemAtRandomPosition(ItemPtrU(new Apple()));
@@ -94,7 +94,7 @@ GameStatePtr GameActive::updateGame(sf::Time elapsed)
              * Spiel in den Game-Over Bildschirm. */
             return std::make_shared<GameOver>(score);
         }
-        /* Der Zähler für die Bewegungszeit wird zurückgesetzt, damit die nächste Bewegung
+        /* Der ZÃ¤hler fÃ¼r die Bewegungszeit wird zurÃ¼ckgesetzt, damit die nÃ¤chste Bewegung
          * wieder nach der vorgegebenen Zeit berechnet wird. */
         elapsedSinceMove = 0;
     }
@@ -112,8 +112,8 @@ void GameActive::render(sf::RenderWindow& window)
     sf::Text scoreText;
 
     scoreText.setFont(textFont);
-    std::ostringstream text;
-    text << "Punkte: " << score;
+    std::wostringstream text;
+    text << L"Punkte: " << score;
     scoreText.setString(text.str());
     scoreText.setCharacterSize(24);
     scoreText.setColor(sf::Color::Blue);
