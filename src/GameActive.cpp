@@ -22,7 +22,7 @@ GameActive::GameActive()
     field.addItem(10, 10, ItemPtrU(new Apple()) );
     snake.initialize(2, 2, Direction::Right, 2);
 
-    speedLevel = 500;
+    speedLevel = 200;
     elapsedSinceMove = 0;
     pauseRequested = false;
 }
