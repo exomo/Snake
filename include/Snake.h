@@ -53,6 +53,8 @@ namespace ExomoSnake
         /* Ändere die Bewegungsrichtung der Schlange */
         void setDirection(Direction direction);
 
+        Direction getCurrentDirection() const;
+
         /* Bewege die Schlange um ein Feld in die aktuelle Bewegungsrichtung */
         MoveResult moveStep(Field& field);
 
@@ -64,7 +66,9 @@ namespace ExomoSnake
     protected:
     private:
         /* Eigenschaften */
-        Direction direction;
+        Direction direction;     // Richtung in die sich die Schlange als nächstes bewegen soll
+        Direction lastDirection; // Richtung in die sich die Schlange beim letzten Schritt bewegt hat
+
         BodyPart head;
         std::vector<BodyPart> body;
 

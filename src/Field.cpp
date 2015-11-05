@@ -1,4 +1,4 @@
-#include "Field.h"
+ï»¿#include "Field.h"
 #include "Item.h"
 
 using namespace ExomoSnake;
@@ -129,12 +129,12 @@ void Field::addItem(const FieldPosition& position, ItemPtrU item)
     addItem(position.first, position.second, std::move(item));
 }
 
-/* Füge ein Item an einer zufälligen freien Position auf dem Spielfeld ein. */
+/* FÃ¼ge ein Item an einer zufÃ¤lligen freien Position auf dem Spielfeld ein. */
 void Field::addItemAtRandomPosition(ItemPtrU item)
 {
-    /* Um eine faire Verteilung über alle Felder zu erhalten und zu vermeiden dass
-     * ein ungültige Position gewählt wird, wird zuerst eine "Lostrommel" aller freien
-     * Felder erstellt und daraus zufällig eines gezogen. */
+    /* Um eine faire Verteilung Ã¼ber alle Felder zu erhalten und zu vermeiden dass
+     * ein ungÃ¼ltige Position gewÃ¤hlt wird, wird zuerst eine "Lostrommel" aller freien
+     * Felder erstellt und daraus zufÃ¤llig eines gezogen. */
     std::vector<FieldPosition> lottery;
     for(const auto& col : tiles)
     {
@@ -153,6 +153,6 @@ void Field::addItemAtRandomPosition(ItemPtrU item)
     /* erstes element aus der lostrummel nehmen */
     const auto& newPosition = lottery.front();
 
-    /* das Item an der gezogenen Position einfügen */
+    /* das Item an der gezogenen Position einfÃ¼gen */
     addItem(newPosition, std::move(item));
 }

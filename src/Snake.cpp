@@ -1,4 +1,4 @@
-#include "Snake.h"
+ï»¿#include "Snake.h"
 
 using namespace ExomoSnake;
 
@@ -38,6 +38,7 @@ Snake::~Snake()
 void Snake::initialize(int x, int y, Direction dir, int length)
 {
     direction = dir;
+    lastDirection = dir;
     head.setPosition(FieldPosition(x,y));
     body.clear();
     bodyPartsToAdd = length;
@@ -48,10 +49,15 @@ void Snake::setDirection(Direction direction)
     this->direction = direction;
 }
 
+Direction Snake::getCurrentDirection() const
+{
+    return lastDirection;
+}
+
 MoveResult Snake::moveStep(Field& field)
 {
-    /* Hier wird tatsächlich die Schlange bewegt. Je nach aktueller Bewegungsrichtung wird
-     * die x oder y Koordinate des Schlangenkopfs um eins erhöht oder verringert. */
+    /* Hier wird tatsÃ¤chlich die Schlange bewegt. Je nach aktueller Bewegungsrichtung wird
+     * die x oder y Koordinate des Schlangenkopfs um eins erhÃ¶ht oder verringert. */
     FieldPosition headPosition = head.getPosition();
     switch(direction)
     {
@@ -71,10 +77,11 @@ MoveResult Snake::moveStep(Field& field)
         --headPosition.second;
         break;
     }
+    lastDirection = direction;
 
-    /* Falls die Schlange noch verlängert werden muss, weil sie vorher einen Apfel gefressen hat,
-     * wird ein neues Körperteil erzeugt und hinten angehängt. Pro Bewegungsschritt wird nur ein
-     * neues Teil eingefügt */
+    /* Falls die Schlange noch verlÃ¤ngert werden muss, weil sie vorher einen Apfel gefressen hat,
+     * wird ein neues KÃ¶rperteil erzeugt und hinten angehÃ¤ngt. Pro Bewegungsschritt wird nur ein
+     * neues Teil eingefÃ¼gt */
     if(bodyPartsToAdd > 0)
     {
         int partRadius = 20;
@@ -88,7 +95,7 @@ MoveResult Snake::moveStep(Field& field)
         field.getTile(lastPartPosition).unblock();
     }
 
-    /* Der Körper wird nachgezogen. Jedes Körperteil nimmt die Position des vorausgehenden Teils ein. */
+    /* Der KÃ¶rper wird nachgezogen. Jedes KÃ¶rperteil nimmt die Position des vorausgehenden Teils ein. */
     for(int i=body.size()-1; i>0; --i)
     {
         body[i].setPosition(body[i-1].getPosition());
@@ -98,17 +105,17 @@ MoveResult Snake::moveStep(Field& field)
     head.setPosition(headPosition);
 
 
-    /* Nachdem die Schlange bewegt wurde wird geprüft, ob dadurch eine Kollision entsteht.
+    /* Nachdem die Schlange bewegt wurde wird geprÃ¼ft, ob dadurch eine Kollision entsteht.
      * Dazu wird als erstes das aktuelle Feld des Spielfelds geholt. */
     auto& nextTile = field.getTile(headPosition);
 
-    /* Prüfen ob die Schlange eine Wand trifft */
+    /* PrÃ¼fen ob die Schlange eine Wand trifft */
     if(nextTile.isWall())
     {
         return MoveResult::HitWall;
     }
 
-    /* Prüfen ob die Schlange sich selbst frisst */
+    /* PrÃ¼fen ob die Schlange sich selbst frisst */
     for(const auto& bodyPart : body)
     {
         if(bodyPart.getPosition() == head.getPosition())
@@ -117,11 +124,11 @@ MoveResult Snake::moveStep(Field& field)
         }
     }
 
-    /* Das Feld als blockiert markieren. Das wird benötigt um neue Items
+    /* Das Feld als blockiert markieren. Das wird benÃ¶tigt um neue Items
      * nicht an Stellen zu erzeugen wo die Schlange gerade ist. */
      nextTile.block();
 
-    /* Prüfe ob die Schlange ein Objekt (z.B. Apfel) gefunden hat */
+    /* PrÃ¼fe ob die Schlange ein Objekt (z.B. Apfel) gefunden hat */
     if(nextTile.hasItem())
     {
         auto itemPtr = nextTile.getItem();
@@ -138,7 +145,7 @@ void Snake::addBodyPart()
 
 void Snake::drawTo(sf::RenderTarget& target)
 {
-    /* Zeichne die Körperteile */
+    /* Zeichne die KÃ¶rperteile */
     for(const auto& bodyPart : body)
     {
         target.draw(bodyPart.getShape());
@@ -149,7 +156,7 @@ void Snake::drawTo(sf::RenderTarget& target)
 
 bool Snake::isOnTile(const Tile& tile)
 {
-    /* Gehe durch alle Körperteile und prüfe ob sich eines auf dem
+    /* Gehe durch alle KÃ¶rperteile und prÃ¼fe ob sich eines auf dem
      * angegebenen Feld befindet */
     if(head.getPosition() == tile.getPosition())
     {

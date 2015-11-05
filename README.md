@@ -5,7 +5,7 @@ Snake-artiges Spiel für den Programmierwettbewerb im NGB.
 [Zum Thread](https://ngb.to/threads/17696-Programmierwettbewerb-2-Aaah-a-snake!)
 
 ## Wie starte ich das Spiel? ##
-Eine spielfertige Version für Windows gibt es zum Download auf meiner Homepage: http://www.exomo.de/files/ExomoSnake.7z
+Eine spielfertige Version für Windows gibt es zum Download auf meiner Homepage: [ExomoSnake.7z](http://www.exomo.de/files/ExomoSnake.7z)
 Einfach das Archiv irgendwo hin entpacken und snake.exe starten.
 
 Eine vorkompilierte Version für Linux gibt es noch nicht, folgt vielleicht noch.
@@ -14,7 +14,7 @@ Eine vorkompilierte Version für Linux gibt es noch nicht, folgt vielleicht noch
 Die Steuerung sollte selbsterklärend sein. Die Schlange wird mit den Pfeiltasten in die entsprechende Richtung gelenkt. Sammle die roten Dreiecke um Punkte zu bekommen, aber Vorsicht: Mit jedem eingesammelten Dreieck wird die Schlange länger und das Spiel somit schwerer.
 
 ## Wie kann ich das Spiel selbst bauen? ##
-Auf jeden Fall muss das Git Repository irgendwo hin geklont werden oder über den "DOWNLOAD ZIP" Button heruntergeladen und irgendwo hin entpackt werden. Das geklonte oder entpackte Verzeichnis wird ab jetzt das Source Code Verzeihnis genannt.
+Auf jeden Fall muss das Git Repository irgendwo hin geklont werden oder über den "DOWNLOAD ZIP" Button heruntergeladen und irgendwo hin entpackt werden. Das geklonte oder entpackte Verzeichnis wird ab jetzt das Source Code Verzeichnis genannt.
  
 ### Abhängigkeiten ###
 Zum Bauen wird [CMake](https://cmake.org/) und ein aktueller C++ Compiler benötigt (ich verwende MinGW g++ 4.8.1 für Windows und g++ 4.9.2 für debian Linux).
@@ -32,6 +32,7 @@ Um das Spiel auch ausführen zu können müssen noch die SFML DLLs in das Source
 * sfml-graphics-d-2.dll
 * sfml-system-d-2.dll
 * sfml-window-d-2.dll
+
 Dann kann snake.exe gestartet werden.
 
 ### Bauen für Linux ###

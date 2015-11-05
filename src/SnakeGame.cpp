@@ -1,4 +1,4 @@
-#include "SnakeGame.h"
+ï»¿#include "SnakeGame.h"
 #include "GameActive.h"
 #include "GameMainMenu.h"
 
@@ -14,7 +14,7 @@ SnakeGame::SnakeGame()
     window.create(sf::VideoMode(800, 600), "~~~ Exomo Snake ~~~", sf::Style::Default, settings);
     // window.create(sf::VideoMode::getDesktopMode(), "~~~ Exomo Snake ~~~", sf::Style::Fullscreen);
 
-    /* Für jeden Tastendruck soll nur ein Event erzeugt werden, wenn die Taste gedrückt bleibt werden keine wiederholten "KeyDown" events erzeugt. */
+    /* FÃ¼r jeden Tastendruck soll nur ein Event erzeugt werden, wenn die Taste gedrÃ¼ckt bleibt werden keine wiederholten "KeyDown" events erzeugt. */
     window.setKeyRepeatEnabled(false);
 
     /* Verticale Synchronisation aktivieren, verhindert den tearing effekt */
@@ -30,7 +30,7 @@ SnakeGame::~SnakeGame()
 
 void SnakeGame::run()
 {
-    /* Hauptschleife in der das Spiel läuft. */
+    /* Hauptschleife in der das Spiel lÃ¤uft. */
     while (window.isOpen())
     {
         sf::Time elapsed = clock.restart();
@@ -49,7 +49,7 @@ void SnakeGame::handleEvents(sf::Time elapsed)
     {
         /*
          * Die Hauptklasse behandelt "Fenster geschlossen" und "Fenster verliert Fokus" selbst.
-         * Alle anderen Events (vor allem Tastendrücke) werden vom aktuellen Zustand verarbeitet.
+         * Alle anderen Events (vor allem TastendrÃ¼cke) werden vom aktuellen Zustand verarbeitet.
          */
         switch(event.type)
         {

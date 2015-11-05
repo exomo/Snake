@@ -1,4 +1,4 @@
-
+﻿
 
 file(GLOB source_files *.cpp)
 add_library(exomo_snake_lib ${source_files})

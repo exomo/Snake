@@ -1,4 +1,4 @@
-#include "Item.h"
+﻿#include "Item.h"
 
 using namespace ExomoSnake;
 
@@ -16,7 +16,7 @@ Apple::Apple()
 {
     sprite = sf::CircleShape(20, 3);
     sprite.setFillColor(sf::Color::Red);
-    sprite.setOrigin(20,20);
+    sprite.setOrigin(19,16);
 }
 
 void Apple::drawTo(sf::RenderTarget& target) const

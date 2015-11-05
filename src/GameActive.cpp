@@ -1,4 +1,4 @@
-#include "GameActive.h"
+﻿#include "GameActive.h"
 
 #include <iostream>
 #include <sstream>
@@ -35,6 +35,12 @@ GameActive::~GameActive()
 
 void GameActive::handleEvent(const sf::Event& event)
 {
+    /*
+     * Die aktuelle Bewegungsrichtung (bei der letzten Bewegung) wird zwischengespeichert.
+     * Die aktuelle Richtung wird erst verändert wenn die Schlange sich bewegt hat.
+     */
+    auto currentDirection = snake.getCurrentDirection();
+
     switch(event.type)
     {
     case sf::Event::KeyPressed:
@@ -46,21 +52,25 @@ void GameActive::handleEvent(const sf::Event& event)
              */
             pauseRequested = true;
         }
+
         /*
-         * Richtungstasten ändern die Bewegungsrichtung der Schlange.
+         * Richtungstasten ändern die Bewegungsrichtung der Schlange für die nächste Bewegung.
          * Solange bis die Schlange sich tatsächlich bewegt hat kann die
          * Bewegungsrichtung immer wieder überschrieben werden, um eventuelle
-         * falsche Eingaben zu korrigieren.
+         * falsche Eingaben zu korrigieren. Nur Bewegungen die nicht entgegengesetzt zur letzten Bewegung sind
+         * sind zugelassen.
          */
-        if(event.key.code == sf::Keyboard::Left)
+        if(event.key.code == sf::Keyboard::Left && currentDirection != Direction::Right)
             snake.setDirection(Direction::Left);
-        if(event.key.code == sf::Keyboard::Right)
+        if(event.key.code == sf::Keyboard::Right && currentDirection != Direction::Left)
             snake.setDirection(Direction::Right);
-        if(event.key.code == sf::Keyboard::Up)
+        if(event.key.code == sf::Keyboard::Up && currentDirection != Direction::Down)
             snake.setDirection(Direction::Up);
-        if(event.key.code == sf::Keyboard::Down)
+        if(event.key.code == sf::Keyboard::Down && currentDirection != Direction::Up)
             snake.setDirection(Direction::Down);
         break;
+
+
 
     default:
         break;
