@@ -43,7 +43,7 @@ void GameMainMenu::handleEvent(const sf::Event& event)
     }
 }
 
-GameStatePtr GameMainMenu::updateGame(sf::Time elapsed)
+GameStatePtr GameMainMenu::updateGame(sf::Time elapsed, const std::shared_ptr<GameState>& currentState)
 {
     if(startRequested)
     {
@@ -69,6 +69,4 @@ void GameMainMenu::render(sf::RenderWindow& window)
     menuText.setColor(sf::Color::Blue);
     menuText.setPosition(50, 20);
     window.draw(menuText);
-
-    window.display();
 }

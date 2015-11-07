@@ -13,7 +13,7 @@ namespace ExomoSnake
         virtual ~GameOver();
 
         void handleEvent(const sf::Event& event) override;
-        GameStatePtr updateGame(sf::Time elapsed) override;
+        GameStatePtr updateGame(sf::Time elapsed, const std::shared_ptr<GameState>& currentState) override;
         void render(sf::RenderWindow& window) override;
     protected:
     private:

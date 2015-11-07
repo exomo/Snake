@@ -30,25 +30,28 @@ SnakeGame::~SnakeGame()
 
 void SnakeGame::run()
 {
+    /* Uhr starten. Alle Zeiten werden relativ zu diesem Zeitpunkt angegeben. */
+    clock.restart();
+
     /* Hauptschleife in der das Spiel läuft. */
     while (window.isOpen())
     {
-        sf::Time elapsed = clock.restart();
+        sf::Time elapsed = clock.getElapsedTime();
 
-        handleEvents(elapsed);
+        handleEvents();
         updateGame(elapsed);
         render();
     }
 }
 
 /* Events verarbeiten. Zum Beispiel Tastatureingaben. */
-void SnakeGame::handleEvents(sf::Time elapsed)
+void SnakeGame::handleEvents()
 {
     sf::Event event;
     while (window.pollEvent(event))
     {
         /*
-         * Die Hauptklasse behandelt "Fenster geschlossen" und "Fenster verliert Fokus" selbst.
+         * Die Hauptklasse behandelt "Fenster geschlossen" selbst.
          * Alle anderen Events (vor allem Tastendrücke) werden vom aktuellen Zustand verarbeitet.
          */
         switch(event.type)
@@ -56,10 +59,6 @@ void SnakeGame::handleEvents(sf::Time elapsed)
         case sf::Event::Closed:
             /* Fenster soll geschlossen werden */
             window.close();
-            break;
-
-        case sf::Event::LostFocus:
-            /* Hauptfenster hat den Fokus verloren, das Spiel wird pausiert. */
             break;
 
         default:
@@ -74,7 +73,7 @@ void SnakeGame::handleEvents(sf::Time elapsed)
 void SnakeGame::updateGame(sf::Time elapsed)
 {
     /* Der aktuelle Zustand kann seinen internen Status aktualisieren. */
-    auto newState = currentState->updateGame(elapsed);
+    auto newState = currentState->updateGame(elapsed, currentState);
     if(newState != nullptr)
     {
         /*
@@ -89,4 +88,5 @@ void SnakeGame::render()
 {
     /* Der aktuelle Zustand zeichnet in das Ausgabefenster. */
     currentState->render(window);
+    window.display();
 }

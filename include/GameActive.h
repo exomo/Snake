@@ -20,7 +20,7 @@ namespace ExomoSnake
         virtual ~GameActive();
 
         void handleEvent(const sf::Event& event) override;
-        GameStatePtr updateGame(sf::Time elapsed) override;
+        GameStatePtr updateGame(sf::Time elapsed, const std::shared_ptr<GameState>& currentState) override;
         void render(sf::RenderWindow& window) override;
     protected:
     private:
@@ -28,8 +28,8 @@ namespace ExomoSnake
         Field field;
         Snake snake;
 
-        /* Zeit die vergangen ist, seit die Schlange das letzte mal einen Schritt bewegt wurde. */
-        int elapsedSinceMove = 0;
+        /* Zeitpunkt (vergangene Zeit seit Spielstart), an dem die Schlange das letzte mal einen Schritt bewegt wurde. */
+        sf::Time lastMoveTime = sf::Time::Zero;
 
         /* Aktuelle Geschwindigkeit des Spiels. Zeit in ms bis die Schlange bewegt wird. */
         int speedLevel = 500;
@@ -38,6 +38,7 @@ namespace ExomoSnake
         sf::Font textFont;
 
         bool pauseRequested = false;
+        bool paused = true;
 
         int score = 0;
     };

@@ -29,7 +29,7 @@ namespace ExomoSnake
          */
 
         /* 1. Benutzereingaben und evtl. Systemevents verarbeiten. */
-        void handleEvents(sf::Time elapsed);
+        void handleEvents();
 
         /* 2. Spielzustand aktualisieren.
            Je nach Eingaben aus Schritt 1 kann das Spiel seinen Zustand ändern.

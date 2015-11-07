@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 
-#include "GameMainMenu.h"
+#include "GamePaused.h"
 #include "GameOver.h"
 #include "Item.h"
 
@@ -23,7 +23,6 @@ GameActive::GameActive()
     snake.initialize(2, 2, Direction::Right, 2);
 
     speedLevel = 200;
-    elapsedSinceMove = 0;
     pauseRequested = false;
 }
 
@@ -43,11 +42,16 @@ void GameActive::handleEvent(const sf::Event& event)
 
     switch(event.type)
     {
+    case sf::Event::LostFocus:
+        /* Hauptfenster hat den Fokus verloren, das Spiel wird pausiert. */
+        pauseRequested = true;
+        break;
+
     case sf::Event::KeyPressed:
-        if(event.key.code == sf::Keyboard::Escape)
+        if(event.key.code == sf::Keyboard::P || event.key.code == sf::Keyboard::Pause)
         {
             /*
-             * Hier wird nur gespeichert dass die Escape Taste gedrückt wurde und in den Pausenbildschirm gewechselt werden soll.
+             * Hier wird nur gespeichert dass die P Taste gedrückt wurde und in den Pausenbildschirm gewechselt werden soll.
              * Der Zustandswechsel nach "Pause" wird erst im updateGame() Schritt durchgeführt.
              */
             pauseRequested = true;
@@ -77,17 +81,29 @@ void GameActive::handleEvent(const sf::Event& event)
     }
 }
 
-GameStatePtr GameActive::updateGame(sf::Time elapsed)
+GameStatePtr GameActive::updateGame(sf::Time elapsed, const std::shared_ptr<GameState>& currentState)
 {
-    /* Wenn die Esc-Taste gedrückt wurde, wird sofort in den Startbildschirm gewechselt,
+    /* Wenn die Pause-Taste gedrückt wurde, wird sofort in den Pause-Bildschirm gewechselt,
      * ohne die Schlange zu bewegen. */
     if(pauseRequested)
     {
-        return std::make_shared<GameMainMenu>();
+        /* Die Pausenanforderung wird zurückgesetz, dafür wird gespeichert dass das Spiel gerade pausiert ist. */
+        pauseRequested = false;
+        paused = true;
+        return std::make_shared<GamePaused>(currentState);
     }
+
+    /* Wenn das Spiel pausiert war (hier kommt man erst hin wenn der Pausenmodus verlassen wurde), wird die Zeitmessung
+     * bis zur nächsten Bewegung neu gestartet. */
+    if(paused)
+    {
+        paused = false;
+        lastMoveTime = elapsed;
+    }
+
     /* Berechne wie lange es her ist seitdem sich die Schlange das letzte Mal einen Schritt bewegt hat.
      * Wenn diese Zeit den aktuellen Geschwindigkeitswert hat, wird die Schlange bewegt. */
-    elapsedSinceMove += elapsed.asMilliseconds();
+    auto elapsedSinceMove = (elapsed - lastMoveTime).asMilliseconds();
     if(elapsedSinceMove >= speedLevel)
     {
         auto moveResult = snake.moveStep(field);
@@ -106,7 +122,7 @@ GameStatePtr GameActive::updateGame(sf::Time elapsed)
         }
         /* Der Zähler für die Bewegungszeit wird zurückgesetzt, damit die nächste Bewegung
          * wieder nach der vorgegebenen Zeit berechnet wird. */
-        elapsedSinceMove = 0;
+        lastMoveTime = elapsed;
     }
 
     return nullptr;
@@ -129,6 +145,4 @@ void GameActive::render(sf::RenderWindow& window)
     scoreText.setColor(sf::Color::Blue);
     scoreText.setPosition(5, 5);
     window.draw(scoreText);
-
-    window.display();
 }

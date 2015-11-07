@@ -21,7 +21,7 @@ namespace ExomoSnake
         virtual ~GameState();
 
         virtual void handleEvent(const sf::Event& event) = 0;
-        virtual std::shared_ptr<GameState> updateGame(sf::Time elapsed) = 0;
+        virtual std::shared_ptr<GameState> updateGame(sf::Time elapsed, const std::shared_ptr<GameState>& currentState) = 0;
         virtual void render(sf::RenderWindow& window) = 0;
     };
     using GameStatePtr = std::shared_ptr<GameState>;

@@ -45,7 +45,7 @@ void GameOver::handleEvent(const sf::Event& event)
     }
 }
 
-GameStatePtr GameOver::updateGame(sf::Time elapsed)
+GameStatePtr GameOver::updateGame(sf::Time elapsed, const std::shared_ptr<GameState>& currentState)
 {
     if(startRequested)
     {
@@ -75,6 +75,4 @@ void GameOver::render(sf::RenderWindow& window)
     menuText.setColor(sf::Color::Blue);
     menuText.setPosition(50, 20);
     window.draw(menuText);
-
-    window.display();
 }
