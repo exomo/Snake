@@ -162,6 +162,19 @@ foreach(FIND_SFML_COMPONENT ${SFML_FIND_COMPONENTS})
                      PATH_SUFFIXES lib64 lib
                      PATHS ${FIND_SFML_PATHS})
 
+        # dll release
+        find_library(SFML_${FIND_SFML_COMPONENT_UPPER}_DLL_RELEASE
+                     NAMES ${FIND_SFML_COMPONENT_NAME}-2
+                     PATH_SUFFIXES bin
+                     PATHS ${FIND_SFML_PATHS})
+                     
+        # dll debug
+        find_library(SFML_${FIND_SFML_COMPONENT_UPPER}_DLL_DEBUG
+                     NAMES ${FIND_SFML_COMPONENT_NAME}-d-2
+                     PATH_SUFFIXES bin
+                     PATHS ${FIND_SFML_PATHS})
+         
+
         # choose the entries that fit the requested link type
         if(SFML_STATIC_LIBRARIES)
             if(SFML_${FIND_SFML_COMPONENT_UPPER}_LIBRARY_STATIC_RELEASE)

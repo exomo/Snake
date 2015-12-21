@@ -64,13 +64,13 @@ void GameActive::handleEvent(const sf::Event& event)
          * falsche Eingaben zu korrigieren. Nur Bewegungen die nicht entgegengesetzt zur letzten Bewegung sind
          * sind zugelassen.
          */
-        if(event.key.code == sf::Keyboard::Left && currentDirection != Direction::Right)
+        if((event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A) && currentDirection != Direction::Right)
             snake.setDirection(Direction::Left);
-        if(event.key.code == sf::Keyboard::Right && currentDirection != Direction::Left)
+        if((event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D) && currentDirection != Direction::Left)
             snake.setDirection(Direction::Right);
-        if(event.key.code == sf::Keyboard::Up && currentDirection != Direction::Down)
+        if((event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W) && currentDirection != Direction::Down)
             snake.setDirection(Direction::Up);
-        if(event.key.code == sf::Keyboard::Down && currentDirection != Direction::Up)
+        if((event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) && currentDirection != Direction::Up)
             snake.setDirection(Direction::Down);
         break;
 

@@ -11,7 +11,8 @@ using namespace ExomoSnake;
 GameMainMenu::GameMainMenu()
 {
     /* Schriftart laden, die zum Anzeigen von Texten verwendet wird */
-    if(!textFont.loadFromFile("./resources/LinLibertine_R_G.ttf"))
+    // if(!textFont.loadFromFile("./resources/WarsawGothicShdObl.otf"))
+    if(!textFont.loadFromFile("./resources/Amaranth-Italic.otf"))
     {
         std::cout << "Schriftart kann nicht geladen werden" << std::endl;
     }
