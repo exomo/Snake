@@ -22,7 +22,7 @@ namespace ExomoSnake
 
         private:
             /* Resourcen für Grafik und Text */
-            sf::Font textFont;
+            const sf::Font& textFont;
 
             /* Hier wird der letzte aktive Zustand gespeichert, um dort hin zurückkehren zu können */
             std::shared_ptr<GameState> lastState;

@@ -1,21 +1,17 @@
 ﻿#include "GameMainMenu.h"
+#include "GameState.h"
+#include "GameActive.h"
+#include "GlobalResources.h"
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
-#include "GameState.h"
-#include "GameActive.h"
 
 using namespace ExomoSnake;
 
 GameMainMenu::GameMainMenu()
+    : textFont(GlobalResources::GetInstance().GetFont())
 {
-    /* Schriftart laden, die zum Anzeigen von Texten verwendet wird */
-    // if(!textFont.loadFromFile("./resources/WarsawGothicShdObl.otf"))
-    if(!textFont.loadFromFile("./resources/Amaranth-Italic.otf"))
-    {
-        std::cout << "Schriftart kann nicht geladen werden" << std::endl;
-    }
 }
 
 GameMainMenu::~GameMainMenu()
@@ -65,9 +61,14 @@ void GameMainMenu::render(sf::RenderWindow& window)
 
     sf::Text menuText;
     menuText.setFont(textFont);
-    menuText.setString(L"Exomo Snake\nDrücke <Enter> um zu starten\nDrücke <Esc> um zu beenden");
-    menuText.setCharacterSize(50);
     menuText.setColor(sf::Color::Blue);
+    menuText.setString(L"Exomo Snake");
+    menuText.setCharacterSize(50);
     menuText.setPosition(50, 20);
+    window.draw(menuText);
+
+    menuText.setString(L"<Enter> Spiel starten\n<Esc> Beenden");
+    menuText.setCharacterSize(40);
+    menuText.setPosition(60, 80);
     window.draw(menuText);
 }

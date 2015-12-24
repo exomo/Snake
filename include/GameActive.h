@@ -2,6 +2,7 @@
 #define GAMEACTIVE_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "GameState.h"
 #include "Snake.h"
 #include "Field.h"
@@ -35,7 +36,10 @@ namespace ExomoSnake
         int speedLevel = 500;
 
         /* Resourcen für Grafik und Text */
-        sf::Font textFont;
+        const sf::Font& textFont;
+        sf::Sound backgroundMusic;
+        sf::Sound appleSound;
+
 
         bool pauseRequested = false;
         bool paused = true;

@@ -19,6 +19,7 @@
 					<Add library="sfml-graphics-d" />
 					<Add library="sfml-window-d" />
 					<Add library="sfml-system-d" />
+					<Add library="sfml-audio-d" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -53,10 +54,10 @@
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-DSFML_STATIC" />
-			<Add directory="../../libraries/SFML-2.3.1/include" />
+			<Add directory="../../libraries/SFML-2.3.2/include" />
 		</Compiler>
 		<Linker>
-			<Add directory="../../libraries/SFML-2.3.1/lib" />
+			<Add directory="../../libraries/SFML-2.3.2/lib" />
 		</Linker>
 		<Unit filename="Main.cpp" />
 		<Unit filename="include/Field.h" />
@@ -65,6 +66,7 @@
 		<Unit filename="include/GameOver.h" />
 		<Unit filename="include/GamePaused.h" />
 		<Unit filename="include/GameState.h" />
+		<Unit filename="include/GlobalResources.h" />
 		<Unit filename="include/Highscore.h" />
 		<Unit filename="include/Item.h" />
 		<Unit filename="include/Snake.h" />
@@ -75,6 +77,7 @@
 		<Unit filename="src/GameOver.cpp" />
 		<Unit filename="src/GamePaused.cpp" />
 		<Unit filename="src/GameState.cpp" />
+		<Unit filename="src/GlobalResources.cpp" />
 		<Unit filename="src/Highscore.cpp" />
 		<Unit filename="src/Item.cpp" />
 		<Unit filename="src/Snake.cpp" />

@@ -1,22 +1,21 @@
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <SFML/Graphics.hpp>
 #include "GameState.h"
 #include "GameActive.h"
 #include "GameMainMenu.h"
 #include "GamePaused.h"
+#include "GlobalResources.h"
+
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <SFML/Graphics.hpp>
+
 
 using namespace ExomoSnake;
 
 GamePaused::GamePaused(const std::shared_ptr<GameState>& lastState)
     : lastState(lastState)
+    , textFont(GlobalResources::GetInstance().GetFont())
 {
-    /* Schriftart laden, die zum Anzeigen von Texten verwendet wird */
-    if(!textFont.loadFromFile("./resources/LinLibertine_R_G.ttf"))
-    {
-        std::cout << "Schriftart kann nicht geladen werden" << std::endl;
-    }
 }
 
 GamePaused::~GamePaused()
@@ -65,14 +64,15 @@ void GamePaused::render(sf::RenderWindow& window)
 
     sf::Text menuText;
 
-    std::wostringstream gamePausedText;
-    gamePausedText << L"Spiel angehalten\n\n"
-                 << L"Drücke P um fortzufahren\nDrücke <Esc> um zum\nHauptmenü zurückzukehren";
-
     menuText.setFont(textFont);
-    menuText.setString(gamePausedText.str());
-    menuText.setCharacterSize(50);
     menuText.setColor(sf::Color::Cyan);
+    menuText.setString(L"Spiel angehalten");
+    menuText.setCharacterSize(50);
     menuText.setPosition(70, 70);
+    window.draw(menuText);
+
+    menuText.setString(L"<P> Spiel fortsetzen\n<Esc> Hauptmenü");
+    menuText.setCharacterSize(40);
+    menuText.setPosition(80, 130);
     window.draw(menuText);
 }

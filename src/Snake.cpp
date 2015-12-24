@@ -26,7 +26,7 @@ void BodyPart::setPosition(const FieldPosition& newPosition)
 }
 
 Snake::Snake()
-    : head(20, sf::Color(200, 50,50))
+    : head(20, sf::Color(200, 50, 50))
 {
 }
 
@@ -85,7 +85,7 @@ MoveResult Snake::moveStep(Field& field)
     if(bodyPartsToAdd > 0)
     {
         int partRadius = 20;
-        BodyPart bodyPart(partRadius, sf::Color(100,250,50));
+        BodyPart bodyPart(partRadius, sf::Color(100, 250, 50));
         body.push_back(bodyPart);
         --bodyPartsToAdd;
     }

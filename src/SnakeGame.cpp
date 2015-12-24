@@ -1,6 +1,7 @@
 ﻿#include "SnakeGame.h"
 #include "GameActive.h"
 #include "GameMainMenu.h"
+#include "GlobalResources.h"
 
 #include <iostream>
 
@@ -15,13 +16,19 @@ SnakeGame::SnakeGame()
     // window.create(sf::VideoMode::getDesktopMode(), "~~~ Exomo Snake ~~~", sf::Style::Fullscreen);
 
     /* Für jeden Tastendruck soll nur ein Event erzeugt werden, wenn die Taste gedrückt bleibt werden keine wiederholten "KeyDown" events erzeugt. */
-    window.setKeyRepeatEnabled(false);
+    window.setKeyRepeatEnabled(true);
 
     /* Verticale Synchronisation aktivieren, verhindert den tearing effekt */
     window.setVerticalSyncEnabled(true);
 
     /* Das Spiel geht ohne Maus, der Cursor soll im Fenster nicht sichtbar sein */
     window.setMouseCursorVisible(false);
+
+    /*
+    * Lade alle Ressourcen (Grafik, Sound, Schriftart, ...
+    * Wenn eine Ressource nicht erfolgreich geladen wurde, wird eine exception geworfen die das Programm beendet.
+    */
+    GlobalResources::GetInstance().LoadResources();
 }
 
 SnakeGame::~SnakeGame()

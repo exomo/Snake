@@ -11,12 +11,12 @@
 using namespace ExomoSnake;
 
 GameActive::GameActive()
+    : textFont(GlobalResources::GetInstance().GetFont())
+    , backgroundMusic(GlobalResources::GetInstance().GetBackgroundMusic())
+    , appleSound(GlobalResources::GetInstance().GetAppleSound())
 {
-    /* Schriftart laden, die zum Anzeigen von Texten verwendet wird */
-    if(!textFont.loadFromFile("./resources/LinLibertine_R_G.ttf"))
-    {
-        std::cout << "Schriftart kann nicht geladen werden" << std::endl;
-    }
+    backgroundMusic.setLoop(true);
+    backgroundMusic.play();
 
     field.initialize(20,15);
     field.addItem(10, 10, ItemPtrU(new Apple()) );
@@ -29,7 +29,7 @@ GameActive::GameActive()
 GameActive::~GameActive()
 {
     //dtor
-
+    backgroundMusic.stop();
 }
 
 void GameActive::handleEvent(const sf::Event& event)
@@ -58,6 +58,21 @@ void GameActive::handleEvent(const sf::Event& event)
         }
 
         /*
+         * Wenn 'M' gedrückt wurde wird die Musik ein oder ausgeschaltet
+         */
+        if(event.key.code == sf::Keyboard::M)
+        {
+            if(backgroundMusic.getStatus() == sf::Sound::Status::Stopped)
+            {
+                backgroundMusic.play();
+            }
+            else
+            {
+                backgroundMusic.stop();
+            }
+        }
+
+        /*
          * Richtungstasten ändern die Bewegungsrichtung der Schlange für die nächste Bewegung.
          * Solange bis die Schlange sich tatsächlich bewegt hat kann die
          * Bewegungsrichtung immer wieder überschrieben werden, um eventuelle
@@ -73,8 +88,6 @@ void GameActive::handleEvent(const sf::Event& event)
         if((event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) && currentDirection != Direction::Up)
             snake.setDirection(Direction::Down);
         break;
-
-
 
     default:
         break;
@@ -112,6 +125,7 @@ GameStatePtr GameActive::updateGame(sf::Time elapsed, const std::shared_ptr<Game
             /* Wenn die Schlange einen Apfel gefunden hat, wird die Punktzahl erhöht
              * und ein neuer Apfel auf dem Spielfeld platziert. */
             ++score;
+            appleSound.play();
             field.addItemAtRandomPosition(ItemPtrU(new Apple()));
         }
         else if(moveResult == MoveResult::HitBody || moveResult == MoveResult::HitWall)

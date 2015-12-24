@@ -19,8 +19,8 @@ namespace ExomoSnake
         void render(sf::RenderWindow& window) override;
     protected:
     private:
-        /* Resourcen für Grafik und Text */
-        sf::Font textFont;
+        /* Resourcen fÃ¼r Grafik und Text */
+        const sf::Font& textFont;
 
         bool exitRequested = false;
         bool startRequested = false;
