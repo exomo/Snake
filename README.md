@@ -29,9 +29,11 @@ Da unter Windows die Bibliotheken nicht an einem Standardpfad sind, muss das Ver
     cmake --build .
 
 Um das Spiel auch ausführen zu können müssen noch die SFML DLLs in das Source Verzeichnis (bzw. das Install Verzeichnis) kopiert werden (für die Debug Version, Release entsprechend ohne "-d"):
+* sfml-audio-d-2.dll
 * sfml-graphics-d-2.dll
 * sfml-system-d-2.dll
 * sfml-window-d-2.dll
+* openal32.dll
 
 Dann kann snake.exe gestartet werden.
 

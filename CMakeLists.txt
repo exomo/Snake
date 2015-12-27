@@ -2,7 +2,7 @@
 project(ExomoSnake)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules")
-find_package(SFML 2.1 COMPONENTS graphics window system REQUIRED)
+find_package(SFML 2.1 COMPONENTS audio graphics window system REQUIRED)
 
 SET(CMAKE_CXX_FLAGS "-std=c++11")
 
