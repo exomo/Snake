@@ -1,6 +1,7 @@
 #include "GlobalResources.h"
 
 #include <iostream>
+#include <sstream>
 
 using namespace ExomoSnake;
 
@@ -23,6 +24,17 @@ void GlobalResources::LoadResources()
     {
         throw resource_exception("./resources/biteapple.ogg");
     }
+
+    /* Levels laden */
+    for(int i=0; i<5; ++i)
+    {
+        std::ostringstream oss;
+        oss << "./resources/level" << i << ".esl";
+        std::string filename = oss.str();
+        Level level;
+        level.LoadFromFile(filename);
+        levels.push_back(level);
+    }
 }
 
 const sf::Font& GlobalResources::GetFont() const
@@ -38,4 +50,21 @@ const sf::SoundBuffer& GlobalResources::GetBackgroundMusic() const
 const sf::SoundBuffer& GlobalResources::GetAppleSound() const
 {
     return appleSound;
+}
+
+int GlobalResources::GetNumberOfLevels() const
+{
+    return levels.size();
+}
+
+const Level& GlobalResources::GetLevel(int levelNumber) const
+{
+    if(levelNumber >= 0 && levelNumber < levels.size())
+    {
+        return levels[levelNumber];
+    }
+    else
+    {
+        return defaultLevel;
+    }
 }

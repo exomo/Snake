@@ -1,8 +1,10 @@
 #ifndef GLOBALRESOURCES_H
 #define GLOBALRESOURCES_H
 
+#include <stdexcept>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "Level.h"
 
 namespace ExomoSnake
 {
@@ -34,6 +36,10 @@ namespace ExomoSnake
             const sf::SoundBuffer& GetBackgroundMusic() const;
             const sf::SoundBuffer& GetAppleSound() const;
 
+            /* Zugriffsmethode für Levels */
+            int GetNumberOfLevels() const;
+            const Level& GetLevel(int levelNumber) const;
+
             /* Einfache Singleton-Implementierung, mit der immer auf die selbe statische Instanz zugegriffen wird. */
             static GlobalResources& GetInstance()
             {
@@ -53,6 +59,9 @@ namespace ExomoSnake
             sf::Font textFont;
             sf::SoundBuffer backgroundMusic;
             sf::SoundBuffer appleSound;
+
+            std::vector<Level> levels;
+            Level defaultLevel;
     };
 
 }

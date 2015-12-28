@@ -1,10 +1,12 @@
 ﻿#include "Field.h"
 #include "Item.h"
 
+#include <iostream>
+
 using namespace ExomoSnake;
 
-Tile::Tile(bool isWall, int x, int y)
-    : tileType(isWall)
+Tile::Tile(TileType type, int x, int y)
+    : tileType(type==TileType::Wall)
     , position(x,y)
     , sprite(sf::RectangleShape(sf::Vector2f(40,40)))
     , blocked(false)
@@ -85,17 +87,20 @@ Field::~Field()
     //dtor
 }
 
-void Field::initialize(int sizeX, int sizeY)
+void Field::initialize(int sizeX, int sizeY, const Level& level)
 {
+    std::wcout << L"Initialisiere Feld mit Level \"" << level.GetName() << L"\"\n";
+    tiles.clear();
     tiles.resize(sizeX);
     for(int x=0; x<sizeX; ++x)
     {
-        // tiles[x].resize(sizeY);
+        tiles[x].reserve(sizeY);
         for(int y=0; y<sizeY; ++y)
         {
-            tiles[x].emplace_back((x == 0 || y == 0 || x == sizeX-1 || y == sizeY-1), x, y);
+            tiles[x].emplace_back(level.GetTileType(x,y), x, y);
         }
     }
+
 }
 
 void Field::drawTo(sf::RenderTarget& target) const
@@ -138,7 +143,6 @@ void Field::addItemAtRandomPosition(ItemPtrU item)
     std::vector<FieldPosition> lottery;
     for(const auto& col : tiles)
     {
-        // tiles[x].resize(sizeY);
         for(const auto& tile : col)
         {
             if(!(tile.isWall() || tile.hasItem() || tile.isBlocked()))
@@ -147,6 +151,12 @@ void Field::addItemAtRandomPosition(ItemPtrU item)
             }
         }
     }
+    /* Wenn es keine freien Felder mehr gibt wird das Item verworfen */
+    if(lottery.empty())
+    {
+        return;
+    }
+
     /* lostrommel mischen */
     random_shuffle(lottery.begin(), lottery.end());
 

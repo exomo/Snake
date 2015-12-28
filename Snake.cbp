@@ -67,8 +67,10 @@
 			<Add directory="../../libraries/SFML-2.3.2/lib" />
 		</Linker>
 		<Unit filename="Main.cpp" />
+		<Unit filename="include/CommonTypes.h" />
 		<Unit filename="include/Field.h" />
 		<Unit filename="include/GameActive.h" />
+		<Unit filename="include/GameLevelCompleted.h" />
 		<Unit filename="include/GameMainMenu.h" />
 		<Unit filename="include/GameOver.h" />
 		<Unit filename="include/GamePaused.h" />
@@ -76,10 +78,12 @@
 		<Unit filename="include/GlobalResources.h" />
 		<Unit filename="include/Highscore.h" />
 		<Unit filename="include/Item.h" />
+		<Unit filename="include/Level.h" />
 		<Unit filename="include/Snake.h" />
 		<Unit filename="include/SnakeGame.h" />
 		<Unit filename="src/Field.cpp" />
 		<Unit filename="src/GameActive.cpp" />
+		<Unit filename="src/GameLevelCompleted.cpp" />
 		<Unit filename="src/GameMainMenu.cpp" />
 		<Unit filename="src/GameOver.cpp" />
 		<Unit filename="src/GamePaused.cpp" />
@@ -87,6 +91,7 @@
 		<Unit filename="src/GlobalResources.cpp" />
 		<Unit filename="src/Highscore.cpp" />
 		<Unit filename="src/Item.cpp" />
+		<Unit filename="src/Level.cpp" />
 		<Unit filename="src/Snake.cpp" />
 		<Unit filename="src/SnakeGame.cpp" />
 		<Extensions>

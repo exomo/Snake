@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Item.h"
+#include "Level.h"
 
 namespace ExomoSnake
 {
@@ -14,7 +15,7 @@ namespace ExomoSnake
     class Tile
     {
         public:
-            Tile(bool isWall, int x, int y);
+            Tile(TileType type, int x, int y);
             bool isWall() const;
             void drawTo(sf::RenderTarget& target) const;
             bool hasItem() const;
@@ -46,7 +47,7 @@ namespace ExomoSnake
             void addItem(const FieldPosition& position, ItemPtrU item);
             void addItemAtRandomPosition(ItemPtrU item);
 
-            void initialize(int sizeX, int sizeY);
+            void initialize(int sizeX, int sizeY, const Level& level);
             void drawTo(sf::RenderTarget& target) const;
 
         protected:

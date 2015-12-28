@@ -5,24 +5,23 @@
 #include <string>
 
 #include "GamePaused.h"
+#include "GameLevelCompleted.h"
 #include "GameOver.h"
 #include "Item.h"
 
 using namespace ExomoSnake;
 
 GameActive::GameActive()
-    : textFont(GlobalResources::GetInstance().GetFont())
-    , backgroundMusic(GlobalResources::GetInstance().GetBackgroundMusic())
-    , appleSound(GlobalResources::GetInstance().GetAppleSound())
+    : globalResources(GlobalResources::GetInstance())
+    , textFont(globalResources.GetFont())
+    , backgroundMusic(globalResources.GetBackgroundMusic())
+    , appleSound(globalResources.GetAppleSound())
 {
     backgroundMusic.setLoop(true);
     backgroundMusic.play();
 
-    field.initialize(20,15);
-    field.addItem(10, 10, ItemPtrU(new Apple()) );
-    snake.initialize(2, 2, Direction::Right, 2);
+    InitializeLevel();
 
-    speedLevel = 200;
     pauseRequested = false;
 }
 
@@ -30,6 +29,30 @@ GameActive::~GameActive()
 {
     //dtor
     backgroundMusic.stop();
+}
+
+
+void GameActive::InitializeLevel()
+{
+    currentLevel = globalResources.GetLevel(levelNumber);
+
+    field.initialize(20,15, currentLevel);
+    auto startPosition = currentLevel.GetStartPosition();
+    auto startDirection = currentLevel.GetStartDirection();
+    snake.initialize(startPosition.first, startPosition.second, startDirection, field, 2);
+    field.addItemAtRandomPosition(ItemPtrU(new Apple()));
+
+    levelScore = 0;
+    if(levelNumber < globalResources.GetNumberOfLevels())
+    {
+        // Für Levels aus Dateien wird die darin angegebene Geschwindigkeit verwendet
+        speedLevel = currentLevel.GetSpeed();
+    }
+    else
+    {
+        speedLevel = 200 - ((levelNumber - globalResources.GetNumberOfLevels()) * 20);
+    }
+
 }
 
 void GameActive::handleEvent(const sf::Event& event)
@@ -106,11 +129,30 @@ GameStatePtr GameActive::updateGame(sf::Time elapsed, const std::shared_ptr<Game
         return std::make_shared<GamePaused>(currentState);
     }
 
+    /* Wenn ein Level beendet wurde, wird sofort in den LevelClear-Bildschirm gewechselt,
+     * ohne die Schlange zu bewegen. */
+    if(completedRequested)
+    {
+        /* Die Pausenanforderung wird zurückgesetz, dafür wird gespeichert dass das Spiel gerade pausiert ist. */
+        completedRequested = false;
+        levelCompleted = true;
+        return std::make_shared<GameLevelCompleted>(currentState);
+    }
+
     /* Wenn das Spiel pausiert war (hier kommt man erst hin wenn der Pausenmodus verlassen wurde), wird die Zeitmessung
      * bis zur nächsten Bewegung neu gestartet. */
     if(paused)
     {
         paused = false;
+        lastMoveTime = elapsed;
+    }
+
+    /* Wie für Pause, wird hier das Spiel fortgesetzt, nachdem ein Level beendet wurde. */
+    if(levelCompleted)
+    {
+        levelCompleted = false;
+        ++levelNumber;
+        InitializeLevel();
         lastMoveTime = elapsed;
     }
 
@@ -125,8 +167,17 @@ GameStatePtr GameActive::updateGame(sf::Time elapsed, const std::shared_ptr<Game
             /* Wenn die Schlange einen Apfel gefunden hat, wird die Punktzahl erhöht
              * und ein neuer Apfel auf dem Spielfeld platziert. */
             ++score;
+            ++levelScore;
             appleSound.play();
-            field.addItemAtRandomPosition(ItemPtrU(new Apple()));
+
+            if(levelScore >= currentLevel.GetPointsToWin())
+            {
+                completedRequested = true;
+            }
+            else
+            {
+                field.addItemAtRandomPosition(ItemPtrU(new Apple()));
+            }
         }
         else if(moveResult == MoveResult::HitBody || moveResult == MoveResult::HitWall)
         {
@@ -153,10 +204,11 @@ void GameActive::render(sf::RenderWindow& window)
 
     scoreText.setFont(textFont);
     std::wostringstream text;
-    text << L"Punkte: " << score;
+    text << L"Punkte: " << score << L" - Level " << levelNumber << L": " << currentLevel.GetName()
+         << L" - Levelpunkte: " << levelScore << "/" << currentLevel.GetPointsToWin();
     scoreText.setString(text.str());
     scoreText.setCharacterSize(24);
     scoreText.setColor(sf::Color::Blue);
-    scoreText.setPosition(5, 5);
+    scoreText.setPosition(15, 5);
     window.draw(scoreText);
 }

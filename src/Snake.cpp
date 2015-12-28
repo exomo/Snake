@@ -35,13 +35,15 @@ Snake::~Snake()
     //dtor
 }
 
-void Snake::initialize(int x, int y, Direction dir, int length)
+void Snake::initialize(int x, int y, Direction dir, Field& field, int length)
 {
     direction = dir;
     lastDirection = dir;
     head.setPosition(FieldPosition(x,y));
     body.clear();
     bodyPartsToAdd = length;
+
+    field.getTile(x,y).block();
 }
 
 void Snake::setDirection(Direction direction)
@@ -63,18 +65,26 @@ MoveResult Snake::moveStep(Field& field)
     {
     case Direction::Right:
         ++headPosition.first;
+        if(headPosition.first > 19)
+            headPosition.first = 0;
         break;
 
         case Direction::Left:
         --headPosition.first;
+        if(headPosition.first < 0)
+            headPosition.first = 19;
         break;
 
         case Direction::Down:
         ++headPosition.second;
+        if(headPosition.second > 14)
+            headPosition.second = 0;
         break;
 
         case Direction::Up:
         --headPosition.second;
+        if(headPosition.second < 0)
+            headPosition.second = 14;
         break;
     }
     lastDirection = direction;

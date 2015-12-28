@@ -5,18 +5,10 @@
 #include <vector>
 
 #include "Field.h"
+#include "CommonTypes.h"
 
 namespace ExomoSnake
 {
-
-    enum class Direction
-    {
-        Right,
-        Left,
-        Up,
-        Down
-    };
-
     enum class MoveResult
     {
         Ok,
@@ -47,10 +39,10 @@ namespace ExomoSnake
         /* Zeichne die Schlange auf das Zeichenfenster */
         void drawTo(sf::RenderTarget& target);
 
-        /* Initialisiere die Schlange mit vorgegebener Position, Richtung und Länge */
-        void initialize(int x, int y, Direction dir, int length = 1);
+        /* Initialisiere die Schlange mit vorgegebener Position, Richtung und LÃ¤nge */
+        void initialize(int x, int y, Direction dir, Field& field, int length = 1);
 
-        /* Ändere die Bewegungsrichtung der Schlange */
+        /* Ã„ndere die Bewegungsrichtung der Schlange */
         void setDirection(Direction direction);
 
         Direction getCurrentDirection() const;
@@ -58,15 +50,15 @@ namespace ExomoSnake
         /* Bewege die Schlange um ein Feld in die aktuelle Bewegungsrichtung */
         MoveResult moveStep(Field& field);
 
-        /* Lasse die Schlange im nächsten Schritt ein Teil länger werden */
+        /* Lasse die Schlange im nÃ¤chsten Schritt ein Teil lÃ¤nger werden */
         void addBodyPart();
 
-        /* Prüfe ob die Schlange sich aktuell auf einem bestimmten Feld befindet */
+        /* PrÃ¼fe ob die Schlange sich aktuell auf einem bestimmten Feld befindet */
         bool isOnTile(const Tile& tile);
     protected:
     private:
         /* Eigenschaften */
-        Direction direction;     // Richtung in die sich die Schlange als nächstes bewegen soll
+        Direction direction;     // Richtung in die sich die Schlange als nÃ¤chstes bewegen soll
         Direction lastDirection; // Richtung in die sich die Schlange beim letzten Schritt bewegt hat
 
         BodyPart head;
