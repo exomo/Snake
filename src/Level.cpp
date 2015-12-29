@@ -1,6 +1,7 @@
 #include "Level.h"
 
 #include <sstream>
+#include "utf8stream.h"
 
 using namespace ExomoSnake;
 
@@ -55,7 +56,8 @@ Direction Level::GetStartDirection() const
 
 void Level::LoadFromFile(const std::string& filename)
 {
-    std::wifstream file(filename);
+    std::wifstream file;
+    openUtf8ForReading(file, filename);
     std::wstring line;
     int y = 0;
 
@@ -86,6 +88,7 @@ void Level::LoadFromFile(const std::string& filename)
         // Zeilen müssen genau die richtige Länge haben
         if(line.length() != sizeX)
         {
+            std::cout << line.length() << std::endl;
             throw loadlevel_exception(filename, "Zeile hat eine falsche Länge");
         }
 

@@ -81,6 +81,8 @@
 		<Unit filename="include/Level.h" />
 		<Unit filename="include/Snake.h" />
 		<Unit filename="include/SnakeGame.h" />
+		<Unit filename="include/stxutif.h" />
+		<Unit filename="include/utf8stream.h" />
 		<Unit filename="src/Field.cpp" />
 		<Unit filename="src/GameActive.cpp" />
 		<Unit filename="src/GameLevelCompleted.cpp" />
@@ -94,6 +96,7 @@
 		<Unit filename="src/Level.cpp" />
 		<Unit filename="src/Snake.cpp" />
 		<Unit filename="src/SnakeGame.cpp" />
+		<Unit filename="src/gel.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

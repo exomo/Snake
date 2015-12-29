@@ -1,4 +1,5 @@
 #include "Highscore.h"
+#include "utf8stream.h"
 
 #include <iostream>
 #include <fstream>
@@ -45,7 +46,8 @@ Highscore::~Highscore()
 /* Lokale Highscore aus Datei laden */
 void Highscore::loadFromFile(std::string filename)
 {
-    std::wifstream fileIn(filename);
+    std::wifstream fileIn;
+    openUtf8ForReading(fileIn, filename);
     std::wstring line;
     std::wistringstream iss;
     int score;
@@ -63,7 +65,8 @@ void Highscore::loadFromFile(std::string filename)
 /* Lokale Highscore in Datei speichern */
 void Highscore::saveToFile(std::string filename)
 {
-    std::wofstream fileOut(filename);
+    std::wofstream fileOut;
+    openUtf8ForWriting(fileOut, filename);
     for(const auto& entry : highscoreList)
     {
         fileOut << entry.first << L" " << entry.second << L"\n";
