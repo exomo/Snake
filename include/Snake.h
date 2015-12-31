@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <queue>
 
 #include "Field.h"
 #include "CommonTypes.h"
@@ -58,8 +59,8 @@ namespace ExomoSnake
     protected:
     private:
         /* Eigenschaften */
-        Direction direction;     // Richtung in die sich die Schlange als nächstes bewegen soll
-        Direction lastDirection; // Richtung in die sich die Schlange beim letzten Schritt bewegt hat
+        Direction direction;     // Richtung in die sich die Schlange sich gerade bewegt
+        std::queue<Direction> directionBuffer; // Buffer für die Richtungen in die sich die Schlange als nächstes bewegen soll
 
         BodyPart head;
         std::vector<BodyPart> body;

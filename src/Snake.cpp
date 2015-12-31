@@ -2,6 +2,24 @@
 
 using namespace ExomoSnake;
 
+namespace
+{
+    /* Berechnet die entgegengesetzte Richtung zu einer Richtung. */
+    Direction opposite(Direction direction)
+    {
+        switch(direction)
+        {
+        case Direction::Down:
+            return Direction::Up;
+        case Direction::Up:
+            return Direction::Down;
+        case Direction::Left:
+            return Direction::Right;
+        case Direction::Right:
+            return Direction::Left;
+        }
+    }
+}
 
 BodyPart::BodyPart(int radius, sf::Color color)
     : shape(radius)
@@ -38,7 +56,6 @@ Snake::~Snake()
 void Snake::initialize(int x, int y, Direction dir, Field& field, int length)
 {
     direction = dir;
-    lastDirection = dir;
     head.setPosition(FieldPosition(x,y));
     body.clear();
     bodyPartsToAdd = length;
@@ -48,16 +65,40 @@ void Snake::initialize(int x, int y, Direction dir, Field& field, int length)
 
 void Snake::setDirection(Direction direction)
 {
-    this->direction = direction;
+    // Wenn schon zwei Richtungswechsel im Buffer sind werden all weiteren Eingaben ignoriert
+    if(directionBuffer.size() >= 2)
+    {
+        return;
+    }
+    Direction compareToDirection;
+    if(directionBuffer.empty())
+    {
+        compareToDirection = this->direction;
+    }
+    else
+    {
+        compareToDirection = directionBuffer.back();
+    }
+
+    if(direction != compareToDirection && direction != opposite(compareToDirection))
+    {
+        directionBuffer.push(direction);
+    }
 }
 
 Direction Snake::getCurrentDirection() const
 {
-    return lastDirection;
+    return direction;
 }
 
 MoveResult Snake::moveStep(Field& field)
 {
+    /* Wenn noch Richtungsangaben im Buffer sind wird die Bewegungsrichtung der Schlange geändert */
+    if(!directionBuffer.empty())
+    {
+        direction = directionBuffer.front();
+        directionBuffer.pop();
+    }
     /* Hier wird tatsächlich die Schlange bewegt. Je nach aktueller Bewegungsrichtung wird
      * die x oder y Koordinate des Schlangenkopfs um eins erhöht oder verringert. */
     FieldPosition headPosition = head.getPosition();
@@ -65,29 +106,32 @@ MoveResult Snake::moveStep(Field& field)
     {
     case Direction::Right:
         ++headPosition.first;
+        // Wenn die Schlange über den rechten Rand hinaus geht, kommt sie auf der linken Seite wieder rein.
         if(headPosition.first > 19)
             headPosition.first = 0;
         break;
 
         case Direction::Left:
         --headPosition.first;
+        // Wenn die Schlange über den linken Rand hinaus geht, kommt sie auf der rechten Seite wieder rein.
         if(headPosition.first < 0)
             headPosition.first = 19;
         break;
 
         case Direction::Down:
         ++headPosition.second;
+        // Wenn die Schlange über den unteren Rand hinaus geht, kommt sie auf der oberen Seite wieder rein.
         if(headPosition.second > 14)
             headPosition.second = 0;
         break;
 
         case Direction::Up:
         --headPosition.second;
+        // Wenn die Schlange über den oberen Rand hinaus geht, kommt sie auf der unteren Seite wieder rein.
         if(headPosition.second < 0)
             headPosition.second = 14;
         break;
     }
-    lastDirection = direction;
 
     /* Falls die Schlange noch verlängert werden muss, weil sie vorher einen Apfel gefressen hat,
      * wird ein neues Körperteil erzeugt und hinten angehängt. Pro Bewegungsschritt wird nur ein

@@ -52,12 +52,15 @@ void Highscore::loadFromFile(std::string filename)
     std::wistringstream iss;
     int score;
     std::wstring name;
+    // Jede Zeile enthÃ¤lt die Punktzahl und dann den Namen
     while(std::getline(fileIn, line))
     {
+        // Mit dem stringstream wird die Punktzahl und der Name aus der Zeile gelsen
         iss.clear();
         iss.str(line);
         iss >> score;
         getline(iss, name);
+        // Der Gelesene Eintrag wird in die interne Highscore-Liste eingetragen
         addScore(score, trim(name));
     }
 }
@@ -90,7 +93,7 @@ int Highscore::addScore(int score, const std::wstring& name)
     highscoreList.insert(iter, std::make_pair(score, trim(name)));
 
 
-    // Wenn mehr als das Maximum an Einträgen in der List e sind wird der Letzte gelöscht.
+    // Wenn mehr als das Maximum an EintrÃ¤gen in der List e sind wird der Letzte gelÃ¶scht.
     if(highscoreList.size() > MAX_ENTRIES)
     {
         highscoreList.resize(MAX_ENTRIES);
@@ -151,7 +154,7 @@ void Highscore::drawTo(sf::RenderTarget& target, int x, int y, int highlightPosi
         // Y Position for den aktuellen Eintrag festlegen
         auto currentY = y + (30 * i);
 
-        // Platznummer schreiben, linksbündig
+        // Platznummer schreiben, linksbÃ¼ndig
         menuText.setPosition(placeX, currentY);
         highscoreText.str(L"");
         highscoreText << (i+1) << L". ";
@@ -159,13 +162,13 @@ void Highscore::drawTo(sf::RenderTarget& target, int x, int y, int highlightPosi
         menuText.setOrigin(0, 0);
         target.draw(menuText);
 
-        // Name schreiben, linksbündig
+        // Name schreiben, linksbÃ¼ndig
         menuText.setPosition(nameX, currentY);
         menuText.setString(highscoreList[i].second);
         menuText.setOrigin(0, 0);
         target.draw(menuText);
 
-        // Punktzahl schreiben, rechtsbündig
+        // Punktzahl schreiben, rechtsbÃ¼ndig
         menuText.setPosition(scoreX, currentY);
         highscoreText.str(L"");
         highscoreText << highscoreList[i].first;
