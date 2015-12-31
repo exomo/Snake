@@ -1,4 +1,5 @@
 #include "stxutif.h"
+#include "utf8stream.h"
 
 #include <fstream>
 
